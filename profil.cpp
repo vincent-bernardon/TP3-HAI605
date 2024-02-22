@@ -1,6 +1,12 @@
-
+/*
+set colors default
+array Color[5] = ["red", "green", "blue", "cyan", "purple"]
+array Titles[5] = ["Image floute 1 fois", "Image floute 2 fois", "Image floute 3 fois", "Image floute 4 fois", "Image floute 5 fois"]
+plot for [i=1:5] 'gaussien_cible_'.i.'_profil-0-152.dat' with lines lt rgb Color[i] title Titles[i]
+*/
 #include <stdio.h>
 #include "image_ppm.h"
+#include <string>
 
 int main(int argc, char* argv[])
 {
@@ -35,7 +41,14 @@ printf("%i",indice);
 
 //prendre tout les pixel sur ligne ou colone et en faire un graph
 FILE *histo; 
-histo = fopen("profil.dat", "wb");
+//changer le nom du fichier par le nom de cNomImgEcrite mais avec .dat
+std::string fileName = std::string(cNomImgEcrite);
+size_t extensionPos = fileName.find_last_of(".");
+if (extensionPos != std::string::npos) {
+  fileName = fileName.substr(0, extensionPos);
+}
+fileName += ".dat";
+histo = fopen(fileName.c_str(), "wb");
 for (int i=0; i < nH; i++){
 
   for (int j=0; j < nW; j++)
